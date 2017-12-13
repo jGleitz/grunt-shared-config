@@ -269,6 +269,7 @@ module.exports = function( grunt ) {
 				var first = true;
 				var sassMapStr = "";
 				var currentValue;
+				var escapedKey;
 
 				for ( key in data ) {
 					if ( data.hasOwnProperty( key ) ) {
@@ -278,7 +279,10 @@ module.exports = function( grunt ) {
 							currentValue = getStyleSafeValue( data[ key ] );
 						}
 
-						currentItem = pattern.replace( "{{key}}", key ).replace( "{{value}}", currentValue );
+						// keys must not start with a dot (because that’s a CSS class)
+						escapedKey = key.startsWith('.') ? '"' + key + '"' : key;
+
+						currentItem = pattern.replace( "{{key}}", escapedKey ).replace( "{{value}}", currentValue );
 
 						if ( first ) {
 							sassMapStr = indent("\n" + currentItem, options.indention);
