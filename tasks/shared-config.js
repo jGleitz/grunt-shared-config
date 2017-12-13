@@ -275,6 +275,8 @@ module.exports = function( grunt ) {
 					if ( data.hasOwnProperty( key ) ) {
 						if ( mout.lang.isObject( data[ key ] ) ) {
 							currentValue = generateSassMapsRecursive( data[ key ] );
+						} else if ( mout.lang.isArray( data [ key ])) {
+							currentValue = '(' + data [ key ].join(', ') + ')';
 						} else {
 							currentValue = getStyleSafeValue( data[ key ] );
 						}
